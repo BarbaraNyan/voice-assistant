@@ -60,10 +60,23 @@ public class AI {
         }
 
         Pattern cityPattern = Pattern.compile("какая погода в городе (\\p{L}+)",Pattern.CASE_INSENSITIVE);
-        Matcher matcher = cityPattern.matcher(user_question);
-        if(matcher.find()){
-            String cityName = matcher.group(1);
+        Matcher matcherWeather = cityPattern.matcher(user_question);
+        Pattern moviePattern = Pattern.compile("фильм (\\p{all}+)",Pattern.CASE_INSENSITIVE);
+        Matcher matcherMovie = moviePattern.matcher(user_question);
+        if(matcherWeather.find()){
+            String cityName = matcherWeather.group(1);
             Weather.get(cityName, new Consumer<String>() {
+                @Override
+                public void accept(String s) {
+                    answers.clear();
+                    answers.add(s);
+                    callback.accept(String.join(", ",answers));
+                }
+            });
+        }
+        else if(matcherMovie.find()){
+            String titleName = matcherMovie.group(1);
+            Movie.get(titleName, new Consumer<String>() {
                 @Override
                 public void accept(String s) {
                     answers.clear();

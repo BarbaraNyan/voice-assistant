@@ -20,7 +20,7 @@ public class MessageController extends RecyclerView.Adapter {
     private static final int USER_MESSAGE = 0;
     private static final int ASSISTANT_MESSAGE = 1;
 
-    //какой тип сообщений хранится в position
+    //какой тип сообщений хранится в position (user or assistant)
     @Override
     public int getItemViewType(int position) {
         Message message = messageList.get(position);
