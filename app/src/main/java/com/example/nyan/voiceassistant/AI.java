@@ -33,17 +33,21 @@ public class AI {
 
         final ArrayList<String> answers = new ArrayList<>();
         int max_score = 0;
-        String max_score_answer="Okay,nice";
+        String max_score_answer="Окей";
         String [] split_user = user_question.split("\\s+");
 
         for(String database_question: database.keySet()){
             String [] split_db = database_question.split("\\s+");
 
             int score= 0;
+            int cut_length;
             for(String word_user: split_user){
                 for(String word_db: split_db){
                     int min_length = Math.min(word_db.length(), word_user.length());
-                    int cut_length = (int) (min_length*0.7);
+                    if(min_length <=3)
+                        cut_length = min_length;
+                    else
+                        cut_length = (int) (min_length*0.7);
                     String word_user_cut = word_user.substring(0,cut_length);
                     String word_db_cut = word_db.substring(0,cut_length);
                     if(word_user_cut.equals(word_db_cut))
